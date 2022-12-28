@@ -16,6 +16,8 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <stddef.h>
+#include <stdint.h>
+#include <sys/types.h>
 
 static const char *hello_str = "Hello World!\n";
 static const char *hello_path = "/hello";
@@ -57,23 +59,12 @@ static int hello_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
 static int hello_open(const char *path, struct fuse_file_info *fi)
 {
 	int fuse_info_size = sizeof(struct fuse_file_info);
-	int flags_offset = offsetof(struct fuse_file_info, flags);
-	int fh_old_offset = offsetof(struct fuse_file_info, fh_old);
-	int writepage_offset = offsetof(struct fuse_file_info, writepage);
-	int direct_io_offset = offsetof(struct fuse_file_info, direct_io);
-	int keep_cache_offset = offsetof(struct fuse_file_info, keep_cache);
-	int flush_offset = offsetof(struct fuse_file_info, flush);
-	int nonseekable_offset = offsetof(struct fuse_file_info, nonseekable);
-	int flock_release_offset  = offsetof(struct fuse_file_info, flock_release);
-	int fh_offset = offsetof(struct fuse_file_info, fh);
-	int lock_owner_offset = offsetof(struct fuse_file_info, lock_owner);
-	printf("fuse info size %s flags offset %s fh_old_offset %s writepage %s direct_io %s keep_cache %s flush %s nonseekable %s flock release %s  fh %s lock owner %s \n",
-			fuse_info_size, flags_offset, fh_old_offset,
-			writepage_offset, direct_io_offset, keep_cache_offset, flush_offset,
-			nonseekable_offset, flock_release_offset, fh_offset,
-			lock_owner_offset);
-	printf("fuse info size %s flags offset %s \n",
-			fuse_info_size, flags_offset);
+	int int_size = sizeof(int);
+	int unsigned_long_size = sizeof(unsigned long);
+	int unsigned_int_size = sizeof(unsigned int);
+	int uint64_t_size = sizeof(uint64_t);
+	printf("fuse info size %d int size %d unsigned long %d, unsigned int %d, uint64_t %d \n",
+			fuse_info_size, int_size, unsigned_long_size, unsigned_int_size,  uint64_t_size);
 	if (strcmp(path, hello_path) != 0)
 		return -ENOENT;
 
