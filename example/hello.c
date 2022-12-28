@@ -100,6 +100,23 @@ static int hello_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
 
 static int hello_open(const char *path, struct fuse_file_info *fi)
 {
+	int fuse_info_size = sizeof(struct fuse_file_info);
+	int flags_offset = offsetof(fi, fi->flags);
+	int writepage_offset = offsetof(fi,fi->writepage);
+	int direct_io_offset = offsetof(fi, fi->direct_io);
+	int keep_cache_offset = offsetof(fi,  fi->keep_cache);
+	int flush_offset = offsetof(fi,  fi->flush);
+	int nonseekable_offset = offsetof(fi, fi->nonseekable);
+	int flock_release_offset  = offsetof(fi, fi->flock_release);
+	int cache_readdir_offset = offsetof(fi, fi->cache_readdir);
+	int fh_offset = offsetof(fi,  fi->fh);
+	int lock_owner_offset = offsetof(fi, fi->lock_owner);
+	int poll_events_offset = offsetof(fi, fi->poll_events);
+	printf("fuse info size %s flags offset %s writepage %s direct_io %s keep_cache %s flush %s nonseekable %s flock release %s cache_readdir %s fh %s lock owner %s poll event %s \n",
+			fuse_info_size, flags_offset,
+			writepage_offset, direct_io_offset, keep_cache_offset, flush_offset,
+			nonseekable_offset, flock_release_offset, cache_readdir_offset, fh_offset,
+			lock_owner_offset, poll_events_offset);
 	if (strcmp(path+1, options.filename) != 0)
 		return -ENOENT;
 
