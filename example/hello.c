@@ -56,21 +56,9 @@ static int hello_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
 static int hello_open(const char *path, struct fuse_file_info *fi)
 {
 	int fuse_info_size = sizeof(struct fuse_file_info);
-	int flags_offset = offsetof(fi, fi->flags);
-	int fh_old_offset = offsetof(fi,  fi->fh_old);
-	int writepage_offset = offsetof(fi,fi->writepage);
-	int direct_io_offset = offsetof(fi, fi->direct_io);
-	int keep_cache_offset = offsetof(fi,  fi->keep_cache);
-	int flush_offset = offsetof(fi,  fi->flush);
-	int nonseekable_offset = offsetof(fi, fi->nonseekable);
-	int flock_release_offset  = offsetof(fi, fi->flock_release);
-	int fh_offset = offsetof(fi,  fi->fh);
-	int lock_owner_offset = offsetof(fi, fi->lock_owner);
-	printf("fuse info size %s flags offset %s fh_old %s writepage %s direct_io %s keep_cache %s flush %s nonseekable %s flock release %s fh %s lock owner %s \n",
-			fuse_info_size, flags_offset, fh_old_offset,
-			writepage_offset, direct_io_offset, keep_cache_offset, flush_offset,
-			nonseekable_offset, flock_release_offset,  fh_offset,
-			lock_owner_offset);
+	int flags_offset = offsetof(fuse_file_info, flags);
+	printf("fuse info size %s flags offset %s \n",
+			fuse_info_size, flags_offset);
 	if (strcmp(path, hello_path) != 0)
 		return -ENOENT;
 
