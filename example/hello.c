@@ -58,13 +58,6 @@ static int hello_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
 
 static int hello_open(const char *path, struct fuse_file_info *fi)
 {
-	int fuse_info_size = sizeof(struct fuse_file_info);
-	int int_size = sizeof(int);
-	int unsigned_long_size = sizeof(unsigned long);
-	int unsigned_int_size = sizeof(unsigned int);
-	int uint64_t_size = sizeof(uint64_t);
-	printf("fuse info size %d int size %d unsigned long %d, unsigned int %d, uint64_t %d \n",
-			fuse_info_size, int_size, unsigned_long_size, unsigned_int_size,  uint64_t_size);
 	if (strcmp(path, hello_path) != 0)
 		return -ENOENT;
 
@@ -102,5 +95,12 @@ static struct fuse_operations hello_oper = {
 
 int main(int argc, char *argv[])
 {
+	int fuse_info_size = sizeof(struct fuse_file_info);
+	int int_size = sizeof(int);
+	int unsigned_long_size = sizeof(unsigned long);
+	int unsigned_int_size = sizeof(unsigned int);
+	int uint64_t_size = sizeof(uint64_t);
+	printf("fuse info size %d int size %d unsigned long %d, unsigned int %d, uint64_t %d \n",
+			fuse_info_size, int_size, unsigned_long_size, unsigned_int_size,  uint64_t_size);
 	return fuse_main(argc, argv, &hello_oper, NULL);
 }
